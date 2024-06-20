@@ -1,6 +1,8 @@
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { IUser } from "@/types";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export const INITIAL_USER = {
   id: "",
@@ -20,13 +22,23 @@ const INITIAL_STATE = {
   checkAuthUser: async () => false as boolean,
 };
 
+type IContextType = {
+  user: IUser;
+  isLoading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<IUser>>;
+  isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthUser: () => Promise<boolean>;
+};
+
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 
-const AuthContext = () => {
-  return <div>AuthContext</div>;
-};
-xport function AuthProvider({ children }: { children: React.ReactNode }) {
+// const AuthContext = () => {
+//   return <div>AuthContext</div>;
+// };
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
     const navigate = useNavigate();
     const [user, setUser] = useState<IUser>(INITIAL_USER);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -89,4 +101,6 @@ xport function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 
-export default AuthContext;
+export default AuthProvider;
+
+export const useUserContext = () => useContext(AuthContext);
