@@ -26,6 +26,10 @@ const SignupForm = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   // const isUserLoading = false;
+  // Queries
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount();
+  const { mutateAsync: signInAccount, isPending: isSigningInUser } = useSignInAccount();
+
 
 
   // 1. Define your form.
@@ -39,24 +43,20 @@ const SignupForm = () => {
     },
   });
 
-  // Queries
-  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount();
-  const { mutateAsync: signInAccount, isPending: isSigningInUser } = useSignInAccount();
-
+  
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
     // create new user
     const newUser = await createUserAccount(values);
-  // const handleSignup = async (values: z.infer<typeof SignupValidation>) => {
-  //   try {
-  //     const newUser = await createUserAccount(values);
+    // const handleSignup = async (values: z.infer<typeof SignupValidation>) => {
+    //   try {
+    //     const newUser = await createUserAccount(values);
     
-    if (!newUser) {
+    if (!newUser) { 
       toast({ title: "Sign up failed. Please try again.", });
       
-      return;
-    
+      return; 
     }
 
     const session = await signInAccount({
@@ -67,9 +67,9 @@ const SignupForm = () => {
     if (!session) {
       toast({ title: "Something went wrong. Please login your new account." });
       
-      navigate("/sign-in");
+      // navigate("/sign-in");
       
-      return;
+      // return;
     }
 
     const isLoggedIn = await checkAuthUser();
