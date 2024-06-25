@@ -5,6 +5,7 @@ import { sidebarLinks } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
+import Loader from "./Loader";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const LeftSidebar = () => {
       <div className="flex flex-col gap-11">
         <Link to="/" className="flex gap-3 items-center">
           <img
-            src="/assets/images/logo.svg"
+            src="/assets/images/logo3.svg"
             alt="logo"
             width={170}
             height={36}
